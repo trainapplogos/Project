@@ -2,35 +2,63 @@ package ua.com.acomahmanager.domain;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "messages")
 public class Message {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	@Column
 	private Long recipientId;
+	
+	@Column
 	private String message;
+	
+	@Column
 	private Boolean shown;
+	
+	@Column
 	private Boolean important;
+	
+	@Column
 	private MessageType type;
+	
+	@Column(nullable = true) //true for non rental messages
+	private Long billId;
+	
+	@Column
 	private Date creationDate;
 	
 	public Message() {}
 
-	public Message(Long recipientId, String message, Boolean shown, Boolean important, MessageType type,
+	public Message(Long recipientId, String message, Boolean shown, Boolean important, MessageType type, Long billId,
 			Date creationDate) {
 		this.recipientId = recipientId;
 		this.message = message;
 		this.shown = shown;
 		this.important = important;
 		this.type = type;
+		this.billId = billId;
 		this.creationDate = creationDate;
 	}
 
 	public Message(Long id, Long recipientId, String message, Boolean shown, Boolean important, MessageType type,
-			Date creationDate) {
+			Long billId, Date creationDate) {
 		this.id = id;
 		this.recipientId = recipientId;
 		this.message = message;
 		this.shown = shown;
 		this.important = important;
 		this.type = type;
+		this.billId = billId;
 		this.creationDate = creationDate;
 	}
 
@@ -82,6 +110,14 @@ public class Message {
 		this.type = type;
 	}
 
+	public Long getBillId() {
+		return billId;
+	}
+
+	public void setBillId(Long billId) {
+		this.billId = billId;
+	}
+
 	public Date getCreationDate() {
 		return creationDate;
 	}
@@ -94,6 +130,7 @@ public class Message {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((billId == null) ? 0 : billId.hashCode());
 		result = prime * result + ((creationDate == null) ? 0 : creationDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((important == null) ? 0 : important.hashCode());
@@ -113,6 +150,11 @@ public class Message {
 		if (getClass() != obj.getClass())
 			return false;
 		Message other = (Message) obj;
+		if (billId == null) {
+			if (other.billId != null)
+				return false;
+		} else if (!billId.equals(other.billId))
+			return false;
 		if (creationDate == null) {
 			if (other.creationDate != null)
 				return false;
@@ -151,7 +193,8 @@ public class Message {
 	@Override
 	public String toString() {
 		return "Message [id=" + id + ", recipientId=" + recipientId + ", message=" + message + ", shown=" + shown
-				+ ", important=" + important + ", type=" + type + ", creationDate=" + creationDate + "]";
+				+ ", important=" + important + ", type=" + type + ", billId=" + billId + ", creationDate="
+				+ creationDate + "]";
 	}
-	
+
 }

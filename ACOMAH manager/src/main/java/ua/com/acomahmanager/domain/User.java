@@ -16,31 +16,44 @@ public class User {
 	private Long id;
 	
 	private String email;
-	private String firstname;
-	private String lastname;
+	private String firstName;
+	private String lastName;
 	private String patronymic;
 	
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
 	private String password;
+	private String passwordConfirm;
 	
 	public User() {	}
+	
+	public User(User user) {	
+		this.id = user.id;
+		this.email = user.email;
+		this.firstName = user.firstName;
+		this.lastName = user.lastName;
+		this.patronymic = user.patronymic;
+		this.role = user.role;
+		this.password = user.password;
+		//passwordConfirm ? don`t we need this
+	}
 
-	public User(String email, String firstname, String lastname, String patronymic, UserRole role, String password) {
+
+	public User(String email, String firstName, String lastName, String patronymic, UserRole role, String password) {
 		this.email = email;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.patronymic = patronymic;
 		this.role = role;
 		this.password = password;
 	}
 
-	public User(Long id, String email, String firstname, String lastname, String patronymic, UserRole role,
+	public User(Long id, String email, String firstName, String lastName, String patronymic, UserRole role,
 			String password) {
 		this.id = id;
 		this.email = email;
-		this.firstname = firstname;
-		this.lastname = lastname;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.patronymic = patronymic;
 		this.role = role;
 		this.password = password;
@@ -51,9 +64,9 @@ public class User {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((firstname == null) ? 0 : firstname.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((lastname == null) ? 0 : lastname.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((patronymic == null) ? 0 : patronymic.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
@@ -74,20 +87,20 @@ public class User {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (firstname == null) {
-			if (other.firstname != null)
+		if (firstName == null) {
+			if (other.firstName != null)
 				return false;
-		} else if (!firstname.equals(other.firstname))
+		} else if (!firstName.equals(other.firstName))
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (lastname == null) {
-			if (other.lastname != null)
+		if (lastName == null) {
+			if (other.lastName != null)
 				return false;
-		} else if (!lastname.equals(other.lastname))
+		} else if (!lastName.equals(other.lastName))
 			return false;
 		if (password == null) {
 			if (other.password != null)
@@ -120,20 +133,20 @@ public class User {
 		this.email = email;
 	}
 
-	public String getFirstname() {
-		return firstname;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getPatronymic() {
@@ -159,10 +172,20 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
+
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", firstname=" + firstname + ", lastname=" + lastname
+		return "User [id=" + id + ", email=" + email + ", firstname=" + firstName + ", lastname=" + lastName
 				+ ", patronymic=" + patronymic + ", role=" + role + ", password=" + password + "]";
 	}
 }
