@@ -1,10 +1,10 @@
 package ua.com.acomahmanager.domain;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Message {
-	private Integer id;
-	private Integer recipientId;
+	private Long id;
+	private Long recipientId;
 	private String message;
 	private Boolean shown;
 	private Boolean important;
@@ -13,7 +13,7 @@ public class Message {
 	
 	public Message() {}
 
-	public Message(Integer recipientId, String message, Boolean shown, Boolean important, MessageType type,
+	public Message(Long recipientId, String message, Boolean shown, Boolean important, MessageType type,
 			Date creationDate) {
 		this.recipientId = recipientId;
 		this.message = message;
@@ -23,7 +23,7 @@ public class Message {
 		this.creationDate = creationDate;
 	}
 
-	public Message(Integer id, Integer recipientId, String message, Boolean shown, Boolean important, MessageType type,
+	public Message(Long id, Long recipientId, String message, Boolean shown, Boolean important, MessageType type,
 			Date creationDate) {
 		this.id = id;
 		this.recipientId = recipientId;
@@ -34,19 +34,19 @@ public class Message {
 		this.creationDate = creationDate;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public Integer getRecipientId() {
+	public Long getRecipientId() {
 		return recipientId;
 	}
 
-	public void setRecipientId(Integer recipientId) {
+	public void setRecipientId(Long recipientId) {
 		this.recipientId = recipientId;
 	}
 

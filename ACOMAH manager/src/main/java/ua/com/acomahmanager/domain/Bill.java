@@ -1,33 +1,144 @@
 package ua.com.acomahmanager.domain;
 
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "bills")
 public class Bill {
-	private Integer id;
-	private String utility; //like water, electricity
-	private Integer utilityId;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
+	@Column
+	private Long utilityId;
+	
+	@Column
 	private Double value;
-	private Integer tariffId; //id of monthly tariff for utility
+	
+	@Column
+	private Long tariffId; //id of monthly tariff for utility
+	
+	@Column
 	private Double summary;
+	
+	@Column
+	private Long userId;
+	
+	@Column
+	private Date promPeriod;
+	
+	@Column
+	private Date toPeriod;
+	
+	@Column(nullable = true)
 	private String comment;
 	
 	public Bill() {	}
 
-	public Bill(String utility, Integer utilityId, Double value, Integer tariffId, Double summary, String comment) {
-		this.utility = utility;
+	public Bill(Long utilityId, Double value, Long tariffId, Double summary, Long userId, Date promPeriod,
+			Date toPeriod, String comment) {
+		super();
 		this.utilityId = utilityId;
 		this.value = value;
 		this.tariffId = tariffId;
 		this.summary = summary;
+		this.userId = userId;
+		this.promPeriod = promPeriod;
+		this.toPeriod = toPeriod;
 		this.comment = comment;
 	}
 
-	public Bill(Integer id, String utility, Integer utilityId, Double value, Integer tariffId, Double summary,
-			String comment) {
+	public Bill(Long id, Long utilityId, Double value, Long tariffId, Double summary, Long userId, Date promPeriod,
+			Date toPeriod, String comment) {
+		super();
 		this.id = id;
-		this.utility = utility;
 		this.utilityId = utilityId;
 		this.value = value;
 		this.tariffId = tariffId;
 		this.summary = summary;
+		this.userId = userId;
+		this.promPeriod = promPeriod;
+		this.toPeriod = toPeriod;
+		this.comment = comment;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getUtilityId() {
+		return utilityId;
+	}
+
+	public void setUtilityId(Long utilityId) {
+		this.utilityId = utilityId;
+	}
+
+	public Double getValue() {
+		return value;
+	}
+
+	public void setValue(Double value) {
+		this.value = value;
+	}
+
+	public Long getTariffId() {
+		return tariffId;
+	}
+
+	public void setTariffId(Long tariffId) {
+		this.tariffId = tariffId;
+	}
+
+	public Double getSummary() {
+		return summary;
+	}
+
+	public void setSummary(Double summary) {
+		this.summary = summary;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+
+	public Date getPromPeriod() {
+		return promPeriod;
+	}
+
+	public void setPromPeriod(Date promPeriod) {
+		this.promPeriod = promPeriod;
+	}
+
+	public Date getToPeriod() {
+		return toPeriod;
+	}
+
+	public void setToPeriod(Date toPeriod) {
+		this.toPeriod = toPeriod;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 
@@ -37,9 +148,11 @@ public class Bill {
 		int result = 1;
 		result = prime * result + ((comment == null) ? 0 : comment.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((promPeriod == null) ? 0 : promPeriod.hashCode());
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
 		result = prime * result + ((tariffId == null) ? 0 : tariffId.hashCode());
-		result = prime * result + ((utility == null) ? 0 : utility.hashCode());
+		result = prime * result + ((toPeriod == null) ? 0 : toPeriod.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		result = prime * result + ((utilityId == null) ? 0 : utilityId.hashCode());
 		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
@@ -64,6 +177,11 @@ public class Bill {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (promPeriod == null) {
+			if (other.promPeriod != null)
+				return false;
+		} else if (!promPeriod.equals(other.promPeriod))
+			return false;
 		if (summary == null) {
 			if (other.summary != null)
 				return false;
@@ -74,10 +192,15 @@ public class Bill {
 				return false;
 		} else if (!tariffId.equals(other.tariffId))
 			return false;
-		if (utility == null) {
-			if (other.utility != null)
+		if (toPeriod == null) {
+			if (other.toPeriod != null)
 				return false;
-		} else if (!utility.equals(other.utility))
+		} else if (!toPeriod.equals(other.toPeriod))
+			return false;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
 			return false;
 		if (utilityId == null) {
 			if (other.utilityId != null)
@@ -94,7 +217,9 @@ public class Bill {
 
 	@Override
 	public String toString() {
-		return "Bill [id=" + id + ", utility=" + utility + ", utilityId=" + utilityId + ", value=" + value
-				+ ", tariffId=" + tariffId + ", summary=" + summary + ", comment=" + comment + "]";
+		return "Bill [id=" + id + ", utilityId=" + utilityId + ", value=" + value + ", tariffId=" + tariffId
+				+ ", summary=" + summary + ", userId=" + userId + ", promPeriod=" + promPeriod + ", toPeriod="
+				+ toPeriod + ", comment=" + comment + "]";
 	}
+
 }

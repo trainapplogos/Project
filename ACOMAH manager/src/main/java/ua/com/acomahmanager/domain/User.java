@@ -1,11 +1,26 @@
 package ua.com.acomahmanager.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class User {
-	private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long id;
+	
 	private String email;
 	private String firstname;
 	private String lastname;
 	private String patronymic;
+	
+	@Enumerated(EnumType.STRING)
 	private UserRole role;
 	private String password;
 	
@@ -20,7 +35,7 @@ public class User {
 		this.password = password;
 	}
 
-	public User(Integer id, String email, String firstname, String lastname, String patronymic, UserRole role,
+	public User(Long id, String email, String firstname, String lastname, String patronymic, UserRole role,
 			String password) {
 		this.id = id;
 		this.email = email;
@@ -89,11 +104,11 @@ public class User {
 		return true;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
