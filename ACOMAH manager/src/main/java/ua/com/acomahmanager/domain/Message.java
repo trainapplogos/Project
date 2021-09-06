@@ -37,10 +37,13 @@ public class Message {
 	@Column
 	private Date creationDate;
 	
+	@Column(name = "is_deleted")
+	private Boolean isDeleted;
+	
 	public Message() {}
 
 	public Message(Long recipientId, String message, Boolean shown, Boolean important, MessageType type, Long billId,
-			Date creationDate) {
+			Date creationDate, Boolean isDeleted) {
 		this.recipientId = recipientId;
 		this.message = message;
 		this.shown = shown;
@@ -48,10 +51,11 @@ public class Message {
 		this.type = type;
 		this.billId = billId;
 		this.creationDate = creationDate;
+		this.isDeleted = isDeleted;
 	}
 
 	public Message(Long id, Long recipientId, String message, Boolean shown, Boolean important, MessageType type,
-			Long billId, Date creationDate) {
+			Long billId, Date creationDate, Boolean isDeleted) {
 		this.id = id;
 		this.recipientId = recipientId;
 		this.message = message;
@@ -60,6 +64,7 @@ public class Message {
 		this.type = type;
 		this.billId = billId;
 		this.creationDate = creationDate;
+		this.isDeleted = isDeleted;
 	}
 
 	public Long getId() {
@@ -126,6 +131,14 @@ public class Message {
 		this.creationDate = creationDate;
 	}
 
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -134,6 +147,7 @@ public class Message {
 		result = prime * result + ((creationDate == null) ? 0 : creationDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((important == null) ? 0 : important.hashCode());
+		result = prime * result + ((isDeleted == null) ? 0 : isDeleted.hashCode());
 		result = prime * result + ((message == null) ? 0 : message.hashCode());
 		result = prime * result + ((recipientId == null) ? 0 : recipientId.hashCode());
 		result = prime * result + ((shown == null) ? 0 : shown.hashCode());
@@ -170,6 +184,11 @@ public class Message {
 				return false;
 		} else if (!important.equals(other.important))
 			return false;
+		if (isDeleted == null) {
+			if (other.isDeleted != null)
+				return false;
+		} else if (!isDeleted.equals(other.isDeleted))
+			return false;
 		if (message == null) {
 			if (other.message != null)
 				return false;
@@ -194,7 +213,6 @@ public class Message {
 	public String toString() {
 		return "Message [id=" + id + ", recipientId=" + recipientId + ", message=" + message + ", shown=" + shown
 				+ ", important=" + important + ", type=" + type + ", billId=" + billId + ", creationDate="
-				+ creationDate + "]";
+				+ creationDate + ", isDeleted=" + isDeleted + "]";
 	}
-
 }
