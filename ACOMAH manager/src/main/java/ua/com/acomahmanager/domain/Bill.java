@@ -33,7 +33,7 @@ public class Bill {
 	private Long userId;
 	
 	@Column
-	private Date promPeriod;
+	private Date fromPeriod;
 	
 	@Column
 	private Date toPeriod;
@@ -41,33 +41,36 @@ public class Bill {
 	@Column(nullable = true)
 	private String comment;
 	
+	@Column(name = "is_deleted")
+	private Boolean isDeleted;
+	
 	public Bill() {	}
 
-	public Bill(Long utilityId, Double value, Long tariffId, Double summary, Long userId, Date promPeriod,
-			Date toPeriod, String comment) {
-		super();
+	public Bill(Long utilityId, Double value, Long tariffId, Double summary, Long userId, Date fromPeriod,
+			Date toPeriod, String comment, Boolean isDeleted) {
 		this.utilityId = utilityId;
 		this.value = value;
 		this.tariffId = tariffId;
 		this.summary = summary;
 		this.userId = userId;
-		this.promPeriod = promPeriod;
+		this.fromPeriod = fromPeriod;
 		this.toPeriod = toPeriod;
 		this.comment = comment;
+		this.isDeleted = isDeleted;
 	}
 
-	public Bill(Long id, Long utilityId, Double value, Long tariffId, Double summary, Long userId, Date promPeriod,
-			Date toPeriod, String comment) {
-		super();
+	public Bill(Long id, Long utilityId, Double value, Long tariffId, Double summary, Long userId, Date fromPeriod,
+			Date toPeriod, String comment, Boolean isDeleted) {
 		this.id = id;
 		this.utilityId = utilityId;
 		this.value = value;
 		this.tariffId = tariffId;
 		this.summary = summary;
 		this.userId = userId;
-		this.promPeriod = promPeriod;
+		this.fromPeriod = fromPeriod;
 		this.toPeriod = toPeriod;
 		this.comment = comment;
+		this.isDeleted = isDeleted;
 	}
 
 	public Long getId() {
@@ -118,12 +121,12 @@ public class Bill {
 		this.userId = userId;
 	}
 
-	public Date getPromPeriod() {
-		return promPeriod;
+	public Date getFromPeriod() {
+		return fromPeriod;
 	}
 
-	public void setPromPeriod(Date promPeriod) {
-		this.promPeriod = promPeriod;
+	public void setFromPeriod(Date fromPeriod) {
+		this.fromPeriod = fromPeriod;
 	}
 
 	public Date getToPeriod() {
@@ -142,13 +145,22 @@ public class Bill {
 		this.comment = comment;
 	}
 
+	public Boolean getIsDeleted() {
+		return isDeleted;
+	}
+
+	public void setIsDeleted(Boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((comment == null) ? 0 : comment.hashCode());
+		result = prime * result + ((fromPeriod == null) ? 0 : fromPeriod.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((promPeriod == null) ? 0 : promPeriod.hashCode());
+		result = prime * result + ((isDeleted == null) ? 0 : isDeleted.hashCode());
 		result = prime * result + ((summary == null) ? 0 : summary.hashCode());
 		result = prime * result + ((tariffId == null) ? 0 : tariffId.hashCode());
 		result = prime * result + ((toPeriod == null) ? 0 : toPeriod.hashCode());
@@ -172,15 +184,20 @@ public class Bill {
 				return false;
 		} else if (!comment.equals(other.comment))
 			return false;
+		if (fromPeriod == null) {
+			if (other.fromPeriod != null)
+				return false;
+		} else if (!fromPeriod.equals(other.fromPeriod))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (promPeriod == null) {
-			if (other.promPeriod != null)
+		if (isDeleted == null) {
+			if (other.isDeleted != null)
 				return false;
-		} else if (!promPeriod.equals(other.promPeriod))
+		} else if (!isDeleted.equals(other.isDeleted))
 			return false;
 		if (summary == null) {
 			if (other.summary != null)
@@ -218,8 +235,8 @@ public class Bill {
 	@Override
 	public String toString() {
 		return "Bill [id=" + id + ", utilityId=" + utilityId + ", value=" + value + ", tariffId=" + tariffId
-				+ ", summary=" + summary + ", userId=" + userId + ", promPeriod=" + promPeriod + ", toPeriod="
-				+ toPeriod + ", comment=" + comment + "]";
+				+ ", summary=" + summary + ", userId=" + userId + ", fromPeriod=" + fromPeriod + ", toPeriod="
+				+ toPeriod + ", comment=" + comment + ", isDeleted=" + isDeleted + "]";
 	}
 
 }
