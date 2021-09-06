@@ -32,31 +32,25 @@ public class MonthlyTariff {
 	@Column(nullable = true)
 	private String description;
 	
-//	@Column(columnDefinition="BOOLEAN DEFAULT false")
-	@Column(name = "is_deleted")
-	private Boolean isDeleted;
-	
 	public MonthlyTariff() {}
 
-	public MonthlyTariff(String utility, Integer utilityId, Double tariff, Date fromDate, String description,
-			Boolean isDeleted) {
+	public MonthlyTariff(String utility, Integer utilityId, Double tariff, Date fromDate, String description) {
+		super();
 		this.utility = utility;
 		this.utilityId = utilityId;
 		this.tariff = tariff;
 		this.fromDate = fromDate;
 		this.description = description;
-		this.isDeleted = isDeleted;
 	}
 
-	public MonthlyTariff(Long id, String utility, Integer utilityId, Double tariff, Date fromDate, String description,
-			Boolean isDeleted) {
+	public MonthlyTariff(Long id, String utility, Integer utilityId, Double tariff, Date fromDate, String description) {
+		super();
 		this.id = id;
 		this.utility = utility;
 		this.utilityId = utilityId;
 		this.tariff = tariff;
 		this.fromDate = fromDate;
 		this.description = description;
-		this.isDeleted = isDeleted;
 	}
 
 	public Long getId() {
@@ -83,20 +77,20 @@ public class MonthlyTariff {
 		this.utilityId = utilityId;
 	}
 
-	public Double getTariff() {
-		return tariff;
-	}
-
-	public void setTariff(Double tariff) {
-		this.tariff = tariff;
-	}
-
 	public Date getFromDate() {
 		return fromDate;
 	}
 
 	public void setFromDate(Date fromDate) {
 		this.fromDate = fromDate;
+	}
+	
+	public Double getTariff() {
+		return tariff;
+	}
+
+	public void setTariff(Double tariff) {
+		this.tariff = tariff;
 	}
 
 	public String getDescription() {
@@ -107,14 +101,6 @@ public class MonthlyTariff {
 		this.description = description;
 	}
 
-	public Boolean getIsDeleted() {
-		return isDeleted;
-	}
-
-	public void setIsDeleted(Boolean isDeleted) {
-		this.isDeleted = isDeleted;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -122,7 +108,6 @@ public class MonthlyTariff {
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((fromDate == null) ? 0 : fromDate.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((isDeleted == null) ? 0 : isDeleted.hashCode());
 		result = prime * result + ((tariff == null) ? 0 : tariff.hashCode());
 		result = prime * result + ((utility == null) ? 0 : utility.hashCode());
 		result = prime * result + ((utilityId == null) ? 0 : utilityId.hashCode());
@@ -153,11 +138,6 @@ public class MonthlyTariff {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (isDeleted == null) {
-			if (other.isDeleted != null)
-				return false;
-		} else if (!isDeleted.equals(other.isDeleted))
-			return false;
 		if (tariff == null) {
 			if (other.tariff != null)
 				return false;
@@ -179,6 +159,7 @@ public class MonthlyTariff {
 	@Override
 	public String toString() {
 		return "MonthlyTariff [id=" + id + ", utility=" + utility + ", utilityId=" + utilityId + ", tariff=" + tariff
-				+ ", fromDate=" + fromDate + ", description=" + description + ", isDeleted=" + isDeleted + "]";
+				+ ", fromDate=" + fromDate + ", description=" + description + "]";
 	}
+
 }
