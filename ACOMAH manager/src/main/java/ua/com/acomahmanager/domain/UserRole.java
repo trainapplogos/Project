@@ -1,5 +1,5 @@
 package ua.com.acomahmanager.domain;
 
 public enum UserRole {
-	USER, ADMINISTRATOR;
+	ROLE_USER, ROLE_ADMIN;
 }
