@@ -25,11 +25,15 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 		if (userOptional.isPresent()) {
 			User user = userOptional.get();
-			if (!user.getIsDeleted())
+			
+			if (!user.getIsActive()) {
+				throw new UsernameNotFoundException("Your account was not activated yet!");
+			} else if (!user.getIsDeleted()) {
 				return new CustomUserDetails(user, Collections.singletonList(user.getRole().toString()));
+			}
 		}
 
-		throw new UsernameNotFoundException("No user present with useremail:" + email);
+		throw new UsernameNotFoundException("No user present with email:" + email);
 	}
 
 }

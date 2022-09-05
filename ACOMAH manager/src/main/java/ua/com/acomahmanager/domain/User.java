@@ -1,12 +1,18 @@
 package ua.com.acomahmanager.domain;
 
+import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,23 +21,36 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
+
 	private String email;
 	private String firstName;
 	private String lastName;
 	private String patronymic;
-	
+
+	private String street;
+	private String building;
+	private String apartment;
+	private String phoneNumber;
+	private String zipCode;
+
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
+
 	private String password;
 	private String passwordConfirm;
-	
+
 	@Column(name = "is_deleted")
 	private Boolean isDeleted;
-	
-	public User() {	}
-	
-	public User(User user) {	
+
+	@Column(name = "is_active", nullable = false)
+	private Boolean isActive = false;
+
+	@OneToMany(mappedBy="user",fetch=FetchType.LAZY)
+	private Set<Bill> bills;
+
+	public User() {}
+
+	public User(User user) {
 		this.id = user.id;
 		this.email = user.email;
 		this.firstName = user.firstName;
@@ -40,34 +59,54 @@ public class User {
 		this.role = user.role;
 		this.password = user.password;
 		this.isDeleted = user.isDeleted;
+		this.isActive = user.isActive;
+		this.street = user.street;
+		this.building = user.building;
+		this.apartment = user.apartment;
+		this.phoneNumber = user.phoneNumber;
+		this.zipCode = user.zipCode;
 	}
-	
-	public User(String email, String firstName, String lastName, String patronymic, UserRole role, String password,
-			String passwordConfirm, Boolean isDeleted) {
+
+	public User(String email, String firstName, String lastName, String patronymic, String street, String building,
+			String apartment, String phoneNumber, String zipCode, UserRole role, String password,
+			String passwordConfirm, Boolean isDeleted, Boolean isActive) {
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.patronymic = patronymic;
+		this.street = street;
+		this.building = building;
+		this.apartment = apartment;
+		this.phoneNumber = phoneNumber;
+		this.zipCode = zipCode;
 		this.role = role;
 		this.password = password;
 		this.passwordConfirm = passwordConfirm;
 		this.isDeleted = isDeleted;
+		this.isActive = isActive;
 	}
-	
-	public User(Long id, String email, String firstName, String lastName, String patronymic, UserRole role,
-			String password, String passwordConfirm, Boolean isDeleted) {
+
+	public User(Long id, String email, String firstName, String lastName, String patronymic, String street,
+			String building, String apartment, String phoneNumber, String zipCode, UserRole role, String password,
+			String passwordConfirm, Boolean isDeleted, Boolean isActive) {
 		this.id = id;
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.patronymic = patronymic;
+		this.street = street;
+		this.building = building;
+		this.apartment = apartment;
+		this.phoneNumber = phoneNumber;
+		this.zipCode = zipCode;
 		this.role = role;
 		this.password = password;
 		this.passwordConfirm = passwordConfirm;
 		this.isDeleted = isDeleted;
+		this.isActive = isActive;
 	}
 
-	//custom getter
+	// [Custom getter: DO NOT DELETE]
 	public String getUserName() {
 		return email;
 	}
@@ -112,6 +151,46 @@ public class User {
 		this.patronymic = patronymic;
 	}
 
+	public String getStreet() {
+		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
+	}
+
+	public String getBuilding() {
+		return building;
+	}
+
+	public void setBuilding(String building) {
+		this.building = building;
+	}
+
+	public String getApartment() {
+		return apartment;
+	}
+
+	public void setApartment(String apartment) {
+		this.apartment = apartment;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
 	public UserRole getRole() {
 		return role;
 	}
@@ -144,20 +223,18 @@ public class User {
 		this.isDeleted = isDeleted;
 	}
 
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((isDeleted == null) ? 0 : isDeleted.hashCode());
-		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((passwordConfirm == null) ? 0 : passwordConfirm.hashCode());
-		result = prime * result + ((patronymic == null) ? 0 : patronymic.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		return result;
+		return Objects.hash(apartment, building, email, firstName, id, isActive, isDeleted, lastName, password,
+				passwordConfirm, patronymic, phoneNumber, role, street, zipCode);
 	}
 
 	@Override
@@ -169,55 +246,22 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (firstName == null) {
-			if (other.firstName != null)
-				return false;
-		} else if (!firstName.equals(other.firstName))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (isDeleted == null) {
-			if (other.isDeleted != null)
-				return false;
-		} else if (!isDeleted.equals(other.isDeleted))
-			return false;
-		if (lastName == null) {
-			if (other.lastName != null)
-				return false;
-		} else if (!lastName.equals(other.lastName))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (passwordConfirm == null) {
-			if (other.passwordConfirm != null)
-				return false;
-		} else if (!passwordConfirm.equals(other.passwordConfirm))
-			return false;
-		if (patronymic == null) {
-			if (other.patronymic != null)
-				return false;
-		} else if (!patronymic.equals(other.patronymic))
-			return false;
-		if (role != other.role)
-			return false;
-		return true;
+		return Objects.equals(apartment, other.apartment) && Objects.equals(building, other.building)
+				&& Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(id, other.id) && Objects.equals(isActive, other.isActive)
+				&& Objects.equals(isDeleted, other.isDeleted) && Objects.equals(lastName, other.lastName)
+				&& Objects.equals(password, other.password) && Objects.equals(passwordConfirm, other.passwordConfirm)
+				&& Objects.equals(patronymic, other.patronymic) && Objects.equals(phoneNumber, other.phoneNumber)
+				&& role == other.role && Objects.equals(street, other.street) && Objects.equals(zipCode, other.zipCode);
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", patronymic=" + patronymic + ", role=" + role + ", password=" + password + ", passwordConfirm="
-				+ passwordConfirm + ", isDeleted=" + isDeleted + "]";
+				+ ", patronymic=" + patronymic + ", street=" + street + ", building=" + building + ", apartment="
+				+ apartment + ", phoneNumber=" + phoneNumber + ", zipCode=" + zipCode + ", role=" + role + ", password="
+				+ password + ", passwordConfirm=" + passwordConfirm + ", isDeleted=" + isDeleted + ", isActive="
+				+ isActive + "]";
 	}
+
 }

@@ -7,17 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "messages")
 public class Message {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	
-	@Column
-	private Long recipientId;
 	
 	@Column
 	private String message;
@@ -31,7 +30,7 @@ public class Message {
 	@Column
 	private MessageType type;
 	
-	@Column(nullable = true) //true for non rental messages
+	@Column(nullable = true) //true for non-rental messages
 	private Long billId;
 	
 	@Column
@@ -40,11 +39,16 @@ public class Message {
 	@Column(name = "is_deleted")
 	private Boolean isDeleted;
 	
+	/*
+	@ManyToOne
+//	@JoinColumn(name = "id", nullable = false)
+	private User recipient;*/
+	
 	public Message() {}
 
-	public Message(Long recipientId, String message, Boolean shown, Boolean important, MessageType type, Long billId,
-			Date creationDate, Boolean isDeleted) {
-		this.recipientId = recipientId;
+	public Message(Long recipientId, User recipient, String message, Boolean shown, Boolean important, MessageType type,
+			Long billId, Date creationDate, Boolean isDeleted) {
+//		this.recipient = recipient;
 		this.message = message;
 		this.shown = shown;
 		this.important = important;
@@ -54,10 +58,10 @@ public class Message {
 		this.isDeleted = isDeleted;
 	}
 
-	public Message(Long id, Long recipientId, String message, Boolean shown, Boolean important, MessageType type,
-			Long billId, Date creationDate, Boolean isDeleted) {
+	public Message(Long id, Long recipientId, User recipient, String message, Boolean shown, Boolean important,
+			MessageType type, Long billId, Date creationDate, Boolean isDeleted) {
 		this.id = id;
-		this.recipientId = recipientId;
+//		this.recipient = recipient;
 		this.message = message;
 		this.shown = shown;
 		this.important = important;
@@ -75,13 +79,13 @@ public class Message {
 		this.id = id;
 	}
 
-	public Long getRecipientId() {
-		return recipientId;
-	}
-
-	public void setRecipientId(Long recipientId) {
-		this.recipientId = recipientId;
-	}
+//	public User getRecipient() {
+//		return recipient;
+//	}
+//
+//	public void setRecipient(User recipient) {
+//		this.recipient = recipient;
+//	}
 
 	public String getMessage() {
 		return message;
@@ -149,7 +153,7 @@ public class Message {
 		result = prime * result + ((important == null) ? 0 : important.hashCode());
 		result = prime * result + ((isDeleted == null) ? 0 : isDeleted.hashCode());
 		result = prime * result + ((message == null) ? 0 : message.hashCode());
-		result = prime * result + ((recipientId == null) ? 0 : recipientId.hashCode());
+//		result = prime * result + ((recipient == null) ? 0 : recipient.hashCode());
 		result = prime * result + ((shown == null) ? 0 : shown.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
@@ -194,11 +198,11 @@ public class Message {
 				return false;
 		} else if (!message.equals(other.message))
 			return false;
-		if (recipientId == null) {
-			if (other.recipientId != null)
-				return false;
-		} else if (!recipientId.equals(other.recipientId))
-			return false;
+//		if (recipient == null) {
+//			if (other.recipient != null)
+//				return false;
+//		} else if (!recipient.equals(other.recipient))
+//			return false;
 		if (shown == null) {
 			if (other.shown != null)
 				return false;
@@ -211,8 +215,8 @@ public class Message {
 
 	@Override
 	public String toString() {
-		return "Message [id=" + id + ", recipientId=" + recipientId + ", message=" + message + ", shown=" + shown
-				+ ", important=" + important + ", type=" + type + ", billId=" + billId + ", creationDate="
-				+ creationDate + ", isDeleted=" + isDeleted + "]";
+		return "Message [id=" + id + ", recipient=" /* + recipient + ", message="*/
+				+ message + ", shown=" + shown + ", important=" + important + ", type=" + type + ", billId=" + billId
+				+ ", creationDate=" + creationDate + ", isDeleted=" + isDeleted + "]";
 	}
 }

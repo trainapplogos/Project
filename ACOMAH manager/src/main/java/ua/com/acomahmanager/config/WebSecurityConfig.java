@@ -31,13 +31,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
 	}
 	
-	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 		.antMatchers("/").permitAll()
-		.antMatchers("/home").access("hasRole('ROLE_USER')").anyRequest().permitAll().and()
+		.antMatchers("/home").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+		.antMatchers("/utilities").access("hasRole('ROLE_ADMIN')")
+		.antMatchers("/tariffs").access("hasRole('ROLE_ADMIN')")
+		.antMatchers("/bills").access("hasRole('ROLE_ADMIN')")
 		
+		.antMatchers("/create-message").access("hasRole('ROLE_ADMIN')")
+		.antMatchers("/create-tariff").access("hasRole('ROLE_ADMIN')")
+		.antMatchers("/create-utility").access("hasRole('ROLE_ADMIN')")
+		.antMatchers("/create-bill").access("hasRole('ROLE_ADMIN')")
+		
+		.antMatchers("/get-users").access("hasRole('ROLE_ADMIN')")
+		.antMatchers("/users-management").access("hasRole('ROLE_ADMIN')")
+		
+		.antMatchers("/sidebar").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+		.antMatchers("/panel").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+		
+		.antMatchers("/supervisor").access("hasRole('ROLE_SUPERVISOR')")
+		
+		.anyRequest().permitAll().and()
 		.formLogin().loginPage("/login")
 		.defaultSuccessUrl("/home").usernameParameter("email").passwordParameter("password").and()
 		.logout().logoutSuccessUrl("/login?logout").and()

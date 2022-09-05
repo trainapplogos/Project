@@ -16,16 +16,22 @@
 
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-    <title>Welcome</title>
+    <title>Welcome Admin control panel</title>
+
 </head>
 <body>
 	
-	<jsp:include page="sidebar.jsp" />
+	<%-- <jsp:include page="sidebar.jsp" /> --%>
+	<jsp:include page="sidebar.jsp">
+    	<jsp:param name="menu" value="${menuItems}" />
+  	</jsp:include>
+		
      
 	<div id="main">
 		<jsp:include page="panel.jsp">
-       		<jsp:param name="headerTitle" value="Control panel" />
+       		<jsp:param name="headerTitle" value="Admin control panel" />
   	  	</jsp:include>
+		
 		
 		<div class="w3-container">
 		
@@ -34,6 +40,7 @@
 		</div>
 
 	</div>
+
 
 	<script src="/js/sidebar.js"> </script>
 

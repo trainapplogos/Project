@@ -15,10 +15,21 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/").setViewName("login"); //set name of .jsp for endpoint "/"
-		registry.addViewController("/home").setViewName("home"); //set name of .jsp for endpoint "/"
-		registry.addViewController("/login").setViewName("login"); //old ver "registry.addViewController("login")..."
-		registry.addViewController("/403").setViewName("403"); //for errors
+		registry.addViewController("/").setViewName("login");
+		registry.addViewController("/home").setViewName("home");
+		registry.addViewController("/login").setViewName("login"); 
+		registry.addViewController("/403").setViewName("403");
+		registry.addViewController("/utilities").setViewName("utilities");
+		registry.addViewController("/tariffs").setViewName("tariffs");
+		registry.addViewController("/bills").setViewName("bills");
+		
+		registry.addViewController("/users-management").setViewName("users-management");
+		
+		registry.addViewController("/create-bill").setViewName("create-bill");
+		registry.addViewController("/create-message").setViewName("create-message");
+		registry.addViewController("/create-tariff").setViewName("create-tariff");
+		registry.addViewController("/create-utility").setViewName("create-utility");
+		
 	}
 	
 	@Bean
